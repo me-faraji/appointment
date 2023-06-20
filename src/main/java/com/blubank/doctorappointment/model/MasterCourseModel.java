@@ -13,6 +13,7 @@ public class MasterCourseModel implements Serializable {
     @Column(name = "id")
     private Long id;
     @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Column(name = "from_hour")
     private Integer fromHour;

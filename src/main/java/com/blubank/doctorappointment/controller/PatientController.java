@@ -24,7 +24,7 @@ public class PatientController {
         return null;
     }
     @GetMapping(name = "/course/reserve/list/{mobile}")
-    public List<DTODetailCourse> getCourse(@PathVariable(name = "mobile") String mobile) {
+    public List<DTODetailCourse> getAllCourse(@PathVariable(name = "mobile") String mobile) {
         return null;
     }
 }

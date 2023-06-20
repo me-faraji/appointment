@@ -14,7 +14,7 @@ import java.util.List;
 public class DoctorController {
     private final DoctorService doctorService;
     @PostMapping(value = "/course/start")
-    public void startCourse(@RequestBody DTOStartCourse dtoStartCourse) {
+    public void addCourse(@RequestBody DTOStartCourse dtoStartCourse) {
 
     }
     @GetMapping(value = "/course/detail/{date}")
