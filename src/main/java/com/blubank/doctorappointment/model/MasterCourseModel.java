@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
 @Table(name = "tb_master_time")
-public class MasterTimeModel implements Serializable {
+public class MasterCourseModel implements Serializable {
     @Id
     private Long id;
     private Date date;
