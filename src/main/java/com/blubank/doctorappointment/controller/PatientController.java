@@ -10,10 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/patient")
-@AllArgsConstructor
+@RequestMapping("/rest/patient")
 public class PatientController {
-    private final PatientService patientService;
+    PatientService patientService;
+
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @GetMapping(value = "/course/empty/list/{date}")
     public List<DTODetailCourse> getCourseEmptyByDate(@PathVariable(name = "date") Date date) {

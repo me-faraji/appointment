@@ -6,14 +6,21 @@ import com.blubank.doctorappointment.model.MasterCourseModel;
 import com.blubank.doctorappointment.repository.DetailCourseRepository;
 import com.blubank.doctorappointment.repository.MasterCourseRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class DoctorService {
-    private final MasterCourseRepository masterCourseRepository;
-    private final DetailCourseRepository detailCourseRepository;
+    MasterCourseRepository masterCourseRepository;
+    DetailCourseRepository detailCourseRepository;
+
+    @Autowired
+    public DoctorService(MasterCourseRepository masterCourseRepository,
+                         DetailCourseRepository detailCourseRepository) {
+        this.masterCourseRepository = masterCourseRepository;
+        this.detailCourseRepository = detailCourseRepository;
+    }
 
     public MasterCourseModel doSaveCourse(DTOStartCourse dtoStartCourse) {
         return null;

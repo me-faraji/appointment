@@ -6,10 +6,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
+@Getter@Setter@AllArgsConstructor@NoArgsConstructor
+@Entity
 @Table(name = "tb_master_course")
 public class MasterCourseModel implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "date")

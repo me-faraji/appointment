@@ -1,10 +1,8 @@
 package com.blubank.doctorappointment.repository.custom;
 
 import com.blubank.doctorappointment.model.DetailCourseModel;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class DetailCourseRepositoryImpl extends BaseJinqRepositoryImpl<DetailCourseModel> implements PatientCustomRepository {
+public class DetailCourseCustomRepositoryImpl extends BaseJinqRepositoryImpl<DetailCourseModel> implements DetailCourseCustomRepository {
     @Override
     protected Class<DetailCourseModel> entityType() {
         return DetailCourseModel.class;

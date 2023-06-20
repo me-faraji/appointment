@@ -4,17 +4,25 @@ import com.blubank.doctorappointment.controller.dto.DTODetailCourse;
 import com.blubank.doctorappointment.controller.dto.DTOStartCourse;
 import com.blubank.doctorappointment.service.DoctorService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/doctor")
-@AllArgsConstructor
+@RequestMapping("/rest/doctor")
 public class DoctorController {
-    private final DoctorService doctorService;
-    @PostMapping(value = "/course/start")
-    public void addCourse(@RequestBody DTOStartCourse dtoStartCourse) {
+    DoctorService doctorService;
+
+    @Autowired
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
+
+    @PostMapping(value = "/course/start/{fromDate}/{toDate}")
+    public void addCourse(@PathVariable(name = "fromDate") String fromDate, @PathVariable(name = "toDate") String toDate) {
 
     }
     @GetMapping(value = "/course/detail/{date}")

@@ -6,16 +6,26 @@ import com.blubank.doctorappointment.repository.DetailCourseRepository;
 import com.blubank.doctorappointment.repository.MasterCourseRepository;
 import com.blubank.doctorappointment.repository.PatientRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class PatientService {
-    private final MasterCourseRepository masterCourseRepository;
-    private final DetailCourseRepository detailCourseRepository;
-    private final PatientRepository patientRepository;
+    MasterCourseRepository masterCourseRepository;
+    DetailCourseRepository detailCourseRepository;
+    PatientRepository patientRepository;
+
+    @Autowired
+    public PatientService(MasterCourseRepository masterCourseRepository,
+                          DetailCourseRepository detailCourseRepository,
+                          PatientRepository patientRepository) {
+        this.masterCourseRepository = masterCourseRepository;
+        this.detailCourseRepository = detailCourseRepository;
+        this.patientRepository = patientRepository;
+
+    }
 
     public List<DTODetailCourse> fetchCourseEmptyByDate() {
         return null;

@@ -1,15 +1,16 @@
 package com.blubank.doctorappointment.model;
 
 import lombok.*;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
+@Entity
 @Table(name = "tb_patient")
 public class PatientModel implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "first_name")

@@ -4,14 +4,16 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
+@Getter@Setter@AllArgsConstructor@NoArgsConstructor
+@Entity
 @Table(name = "tb_detail_course")
 public class DetailCourseModel implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "master")
+    @JoinColumn(name = "master_id")
     private MasterCourseModel master;
     @Column(name = "from_hour")
     private String fromHour;
@@ -19,7 +21,7 @@ public class DetailCourseModel implements Serializable {
     private String toHour;
     @Column(name = "status")
     private String status;
-    @Column(name = "patient-mobil")
+    @Column(name = "patient_mobil")
     private String patientMobil;
     @Column(name = "description")
     private String description;
