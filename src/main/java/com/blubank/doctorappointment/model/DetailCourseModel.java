@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
 @Table(name = "tb_detail_time")
-public class DetailTimeModel implements Serializable {
+public class DetailCourseModel implements Serializable {
     @Id
     private Long id;
     private Long masterId;
