@@ -1,18 +1,26 @@
 package com.blubank.doctorappointment.model;
 
 import lombok.*;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter@Setter@ToString@AllArgsConstructor@NoArgsConstructor
-@Table(name = "tb_detail_time")
+@Table(name = "tb_detail_course")
 public class DetailCourseModel implements Serializable {
     @Id
+    @Column(name = "id")
     private Long id;
-    private Long masterId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "master")
+    private MasterCourseModel master;
+    @Column(name = "from_hour")
     private String fromHour;
+    @Column(name = "to_hour")
     private String toHour;
+    @Column(name = "status")
     private String status;
-    private String mobil;
+    @Column(name = "patient-mobil")
+    private String patientMobil;
+    @Column(name = "description")
+    private String description;
 }
