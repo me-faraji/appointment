@@ -23,7 +23,7 @@ public class JsonUtil {
     public static <T> T readValue(String val, Class<T> clazz) throws Exception {
         return OBJECT_MAPPER.readValue(val, clazz);
     }
-    public static <T> Set<T> readValueToList(String val, Class<T> clazz) throws Exception {
+    public static <T> Set<T> readValueToSet(String val, Class<T> clazz) throws Exception {
         return OBJECT_MAPPER.readValue(val, OBJECT_MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz));
     }
 }
