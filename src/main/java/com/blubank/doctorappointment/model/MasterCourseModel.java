@@ -20,8 +20,11 @@ public class MasterCourseModel implements Serializable {
     private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    private Integer status;
-    private String description;
+    private Integer capacity;
+    private Integer countEmpty;
+    private Integer countReserve;
+    private Integer countDischarge;
+    private Integer countDelete;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "master")
-    private List<DetailCourseModel> detail = new ArrayList<>();
+    private List<DetailCourseModel> detail;
 }

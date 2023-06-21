@@ -14,7 +14,6 @@ public class DetailCourseModel implements Serializable {
     private String fromHour;
     private String toHour;
     private Integer status;
-    private String description;
     @JoinColumn(name = "master_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private MasterCourseModel master;

@@ -17,7 +17,6 @@ public class _Helper {
             DetailCourseModel detail = new DetailCourseModel();
             detail.setMaster(master);
             detail.setStatus(EDetailCourseStatus.EMPTY.getCode());
-            detail.setDescription("empty");
             detail.setFromHour(DateUtil.parse(date, DateUtil.EPattern.HH_mm));
             date = DateUtil.plusMinute(date, 30, DateUtil.EPattern.DD_MM_YYYY_HH_mm_SS);
             detail.setToHour(DateUtil.parse(date, DateUtil.EPattern.HH_mm));

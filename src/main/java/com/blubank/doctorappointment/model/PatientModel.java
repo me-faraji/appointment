@@ -17,8 +17,7 @@ public class PatientModel implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private String nationalNumber;
     private String mobile;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<DetailCourseModel> detail = new ArrayList<>();
+    private List<DetailCourseModel> detail;
 }

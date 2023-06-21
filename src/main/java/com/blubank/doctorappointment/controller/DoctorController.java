@@ -2,10 +2,10 @@ package com.blubank.doctorappointment.controller;
 
 import com.blubank.doctorappointment.controller.dto.DTODetailCourse;
 import com.blubank.doctorappointment.controller.dto.DTOMasterCourse;
-import com.blubank.doctorappointment.controller.excp.ExcpController;
 import com.blubank.doctorappointment.controller.excp.ExcpControllerInvalidParameterException;
 import com.blubank.doctorappointment.controller.excp.ExcpControllerNullParameterException;
 import com.blubank.doctorappointment.model.MasterCourseModel;
+import com.blubank.doctorappointment.model.enums.EDetailCourseStatus;
 import com.blubank.doctorappointment.service.DoctorService;
 import com.blubank.doctorappointment.util.DateUtil;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +31,6 @@ public class DoctorController {
     public MasterCourseModel addCourse(@PathVariable(name = "fromDate") String strFromDate,
                                        @PathVariable(name = "toDate") String strToDate) throws Exception {
         LOG.info("fromDate: {}, toDate: {}", strFromDate, strToDate);
-        if (strFromDate == null || strToDate == null || "".equals(strFromDate.trim()) || "".equals(strToDate.trim()))
-            throw new ExcpControllerNullParameterException("وارد کردن پارامترها الزامی می باشد.");
         long diffInTime;
         Date fromDate;
 //        Date to;
@@ -54,15 +51,35 @@ public class DoctorController {
             throw new ExcpControllerInvalidParameterException("هر دوره حداقل 30 دقیقه می باشد.");
         return doctorService.doSaveCourse(fromDate, strFromDate, diffInMinutes);
     }
-    @GetMapping(value = "/course/detail/{date}")
-    public DTOMasterCourse getDetailCourseByDate(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/course/fetch/{date}")
+    public DTOMasterCourse getCourse(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchDetailCourseByDate(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY));
+        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY));
     }
-
-    @DeleteMapping(name = "/course/detail/delete/{id}")
-    public DTODetailCourse deleteDetailCourseById(@PathVariable(name = "id") Long id) {
-        return null;
+    @GetMapping(value = "/course/empty/fetch/{date}")
+    public List<DTODetailCourse> getEmptyCourse(@PathVariable(name = "date") String strDate) throws Exception {
+        LOG.info("strDate: {}", strDate);
+        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.EMPTY);
+    }
+    @GetMapping(value = "/course/reserve/fetch/{date}")
+    public List<DTODetailCourse> getReserveCourse(@PathVariable(name = "date") String strDate) throws Exception {
+        LOG.info("strDate: {}", strDate);
+        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.RESERVE);
+    }
+    @GetMapping(value = "/course/discharge/fetch/{date}")
+    public List<DTODetailCourse> getDischargeCourse(@PathVariable(name = "date") String strDate) throws Exception {
+        LOG.info("strDate: {}", strDate);
+        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.DISCHARGE);
+    }
+    @GetMapping(value = "/course/delete/fetch/{date}")
+    public List<DTODetailCourse> getDeleteCourse(@PathVariable(name = "date") String strDate) throws Exception {
+        LOG.info("strDate: {}", strDate);
+        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.DELETE);
+    }
+    @DeleteMapping(value = "/course/delete/{id}")
+    public String deleteCourseById(@PathVariable(name = "id") Long id) {
+        LOG.info("course id for delete: {}", id);
+        return doctorService.doDeleteCourseById(id);
     }
 
 }

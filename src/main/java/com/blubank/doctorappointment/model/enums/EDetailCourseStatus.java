@@ -17,12 +17,12 @@ public enum EDetailCourseStatus {
         this.eName = eName;
         this.pName = pName;
     }
-    public static EDetailCourseStatus getValue(EDetailCourseStatus status) {
+    public static EDetailCourseStatus getValue(int code) {
         EDetailCourseStatus[] arr$ = values();
         int len$ = arr$.length;
         for(int i$ = 0; i$ < len$; ++i$) {
             EDetailCourseStatus item = arr$[i$];
-            if (item.equals(status)) {
+            if (item.getCode() == code) {
                 return item;
             }
         }
