@@ -2,7 +2,13 @@ package com.blubank.doctorappointment.controller.dto;
 
 import com.blubank.doctorappointment.model.DetailCourseModel;
 import lombok.*;
+
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +16,7 @@ import java.util.List;
 public class DTOMasterCourse implements Serializable {
     private Long id;
     private Date date;
-    private Integer fromHour;
-    private Integer toHour;
-    private Boolean status;
+    private Integer status;
     private String description;
     private List<DTODetailCourse> detail;
 }

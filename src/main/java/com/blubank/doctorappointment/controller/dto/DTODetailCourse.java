@@ -8,7 +8,7 @@ public class DTODetailCourse implements Serializable {
     private Long id;
     private String fromHour;
     private String toHour;
-    private String status;
-    private String patientMobil;
+    private Integer status;
     private String description;
+    private DTOPatient patient;
 }

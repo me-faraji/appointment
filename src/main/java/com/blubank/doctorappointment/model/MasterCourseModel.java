@@ -3,24 +3,25 @@ package com.blubank.doctorappointment.model;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Getter@Setter@AllArgsConstructor@NoArgsConstructor@Builder
+@Getter@Setter@AllArgsConstructor@NoArgsConstructor
 @Entity
 @Table(name = "tb_master_course")
+//@NamedEntityGraph(name = "MasterCourseModel.detail",
+//        attributeNodes = @NamedAttributeNode("detail")
+//)
 public class MasterCourseModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "master_id")
     private Long id;
-    @Column(name = "from_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fromDate;
-    @Column(name = "to_Date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date toDate;
+    private Date date;
     private Integer status;
     private String description;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "master")
-    private List<DetailCourseModel> detail;
+    private List<DetailCourseModel> detail = new ArrayList<>();
 }

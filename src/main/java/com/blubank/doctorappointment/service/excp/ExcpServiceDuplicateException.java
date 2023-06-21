@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter@Setter
 public class ExcpServiceDuplicateException extends ExcpService {
-
     public ExcpServiceDuplicateException(String errMessage) {
-        super(409, "ExcpServiceDuplicateException", errMessage);
+        super(409, ExcpServiceDuplicateException.class.getSimpleName(), errMessage);
     }
 }

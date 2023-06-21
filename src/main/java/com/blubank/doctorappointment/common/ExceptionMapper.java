@@ -48,7 +48,7 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAllUncaughtException(Exception err, WebRequest request) {
         LOG.error("Unknown error occurred: ", err);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(DTOResponseException.builder()
-                .errMessage(err.getMessage())
+                .errMessage("خطا در انجام عملیات، لطفا با راهبر سامانه تماس گرفته شود.(" + err.getMessage() + ")")
                 .errType(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .errCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
     }
