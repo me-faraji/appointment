@@ -8,6 +8,9 @@ import com.blubank.doctorappointment.repository.MasterCourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +25,9 @@ public class DoctorService {
         this.detailCourseRepository = detailCourseRepository;
     }
 
-    public MasterCourseModel doSaveCourse(DTOStartCourse dtoStartCourse) {
+    @Transactional
+    public MasterCourseModel doSaveCourse(Date from, Date to, long diffInMinutes) {
+
         return null;
     }
     public List<DTODetailCourse> fetchDetailCourseByDate() {

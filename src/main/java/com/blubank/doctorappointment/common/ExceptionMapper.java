@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import java.io.Serializable;
@@ -19,28 +21,29 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
     Logger LOG = LoggerFactory.getLogger(ExceptionMapper.class);
 
     @ExceptionHandler(ExcpController.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> mapper(ExcpController err, WebRequest request) {
-        LOG.error("ExcpController error occurred: ", err);
+        LOG.error("ExcpController error occurred: {}", err.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DTOResponseException.builder()
-                .errMessage(err.getMessage())
+                .errMessage(err.getErrMessage())
                 .errType(err.getErrType())
-                .errCode(err.getErrCode()));
+                .errCode(err.getErrCode()).build());
     }
     @ExceptionHandler(ExcpService.class)
     public ResponseEntity<Object> mapper(ExcpService err, WebRequest request) {
         LOG.error("ExcpService error occurred: ", err);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DTOResponseException.builder()
-                .errMessage(err.getMessage())
+                .errMessage(err.getErrMessage())
                 .errType(err.getErrType())
-                .errCode(err.getErrCode()));
+                .errCode(err.getErrCode()).build());
     }
     @ExceptionHandler(ExcpRepository.class)
     public ResponseEntity<Object> mapper(ExcpRepository err, WebRequest request) {
         LOG.error("ExcpRepository error occurred: ", err);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DTOResponseException.builder()
-                .errMessage(err.getMessage())
+                .errMessage(err.getErrMessage())
                 .errType(err.getErrType())
-                .errCode(err.getErrCode()));
+                .errCode(err.getErrCode()).build());
     }
 
     @ExceptionHandler(Exception.class)
@@ -49,7 +52,7 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(DTOResponseException.builder()
                 .errMessage(err.getMessage())
                 .errType(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                .errCode(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                .errCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
     }
 
     @Getter@Setter@AllArgsConstructor@NoArgsConstructor@Builder

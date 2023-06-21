@@ -14,6 +14,7 @@ import java.util.List;
 public class PatientController {
     PatientService patientService;
 
+    @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }

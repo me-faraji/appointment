@@ -1,9 +1,6 @@
 package com.blubank.doctorappointment.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -13,7 +10,7 @@ public class ExcpGeneral extends RuntimeException implements Serializable {
 
     private Integer errCode;
     private String errType;
-    private String errMassage;
+    private String errMessage;
 
     public synchronized Throwable fillInStackTrace() {
         return this;

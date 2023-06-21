@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class DetailCourseModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "master_id")
@@ -19,10 +18,8 @@ public class DetailCourseModel implements Serializable {
     private String fromHour;
     @Column(name = "to_hour")
     private String toHour;
-    @Column(name = "status")
     private String status;
     @Column(name = "patient_mobil")
     private String patientMobil;
-    @Column(name = "description")
     private String description;
 }
