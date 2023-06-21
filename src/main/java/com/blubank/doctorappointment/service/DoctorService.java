@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.service;
 
 import com.blubank.doctorappointment.common._Helper;
-import com.blubank.doctorappointment.common.MasterCourseModelMapper;
+import com.blubank.doctorappointment.common.EntityMapper;
 import com.blubank.doctorappointment.controller.dto.DTODetailCourse;
 import com.blubank.doctorappointment.controller.dto.DTOMasterCourse;
 import com.blubank.doctorappointment.model.DetailCourseModel;
@@ -51,7 +51,7 @@ public class DoctorService {
     public DTOMasterCourse fetchDetailCourseByDate(Date date) throws Exception {
         Optional<MasterCourseModel> master = masterCourseRepository.findByDate(date);
         if (master.isEmpty()) return null;
-        return MasterCourseModelMapper.INSTANCE.toDto(master.get());
+        return EntityMapper.INSTANCE.toDto(master.get());
     }
     public DTODetailCourse doDeleteDetailCourseById() {
         return null;

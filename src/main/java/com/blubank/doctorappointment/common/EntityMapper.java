@@ -6,8 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface MasterCourseModelMapper {
-    MasterCourseModelMapper INSTANCE = Mappers.getMapper(MasterCourseModelMapper.class);
+public interface EntityMapper {
+    EntityMapper INSTANCE = Mappers.getMapper(EntityMapper.class);
 
     DTOMasterCourse toDto(MasterCourseModel model);
 }
