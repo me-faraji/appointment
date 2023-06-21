@@ -19,7 +19,7 @@ public class MasterCourseModel implements Serializable {
     @Column(name = "to_Date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date toDate;
-    private Boolean status;
+    private Integer status;
     private String description;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "master")
     private List<DetailCourseModel> detail;

@@ -18,7 +18,7 @@ public class DetailCourseModel implements Serializable {
     private String fromHour;
     @Column(name = "to_hour")
     private String toHour;
-    private String status;
+    private Integer status;
     @Column(name = "patient_mobil")
     private String patientMobil;
     private String description;

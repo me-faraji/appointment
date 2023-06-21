@@ -25,7 +25,7 @@ public class DoctorController {
     }
 
     @PostMapping(value = "/course/start/{fromDate}/{toDate}")
-    public MasterCourseModel addCourse(@PathVariable(name = "fromDate") String fromDate, @PathVariable(name = "toDate") String toDate) {
+    public MasterCourseModel addCourse(@PathVariable(name = "fromDate") String fromDate, @PathVariable(name = "toDate") String toDate) throws Exception {
         LOG.info("fromDate: {}, toDate: {}", fromDate, toDate);
         if (fromDate == null || toDate == null || "".equals(fromDate.trim()) || "".equals(toDate.trim()))
             throw new ExcpController(400, "Bad Request", "وارد کردن پارامترها الزامی می باشد.");
@@ -33,9 +33,9 @@ public class DoctorController {
         Date from;
         Date to;
         try {
-            diffInTime = DateUtil.diffInTime(fromDate, toDate);
-            from = DateUtil.toDate(fromDate);
-            to = DateUtil.toDate(toDate);
+            diffInTime = DateUtil.diffInTime(fromDate, toDate, DateUtil.EPattern.DD_MM_YYYY_HH_mm_SS);
+            from = DateUtil.parse(fromDate, DateUtil.EPattern.DD_MM_YYYY_HH_mm_SS);
+            to = DateUtil.parse(toDate, DateUtil.EPattern.DD_MM_YYYY_HH_mm_SS);
         } catch (Exception err) {
             throw new ExcpController(400, "Bad Request", "لطفا پارامترها را صحیح وارد نمائید.");
         }
@@ -47,8 +47,7 @@ public class DoctorController {
         long diffInMinutes = DateUtil.diffInMinutes(diffInTime);
         if (diffInMinutes < 30)
             throw new ExcpController(400, "Bad Request", "هر دوره حداقل 30 دقیقه می باشد.");
-        System.out.println(DateUtil.plusMinute(from, 30));
-        return null;//doctorService.doSaveCourse(from, to, diffInMinutes);
+        return doctorService.doSaveCourse(from, to, diffInMinutes);
     }
     @GetMapping(value = "/course/detail/{date}")
     public List<DTODetailCourse> getDetailCourseByDate(@PathVariable(name = "date") Date date) {

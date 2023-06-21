@@ -6,4 +6,7 @@ import lombok.Setter;
 
 @Getter@Setter
 public class ExcpService extends ExcpGeneral {
+    public ExcpService(Integer errCode, String errType, String errMessage) {
+        super(errCode, errType, errMessage);
+    }
 }

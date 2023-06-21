@@ -1,7 +1,6 @@
 package com.blubank.doctorappointment.common;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
