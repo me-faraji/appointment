@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.repository.custom;
 
-import com.blubank.doctorappointment.model.DetailCourseModel;
-import com.blubank.doctorappointment.model.MasterCourseModel;
+import com.blubank.doctorappointment.model.DetailAppointmentModel;
+import com.blubank.doctorappointment.model.MasterAppointmentModel;
 import com.blubank.doctorappointment.service.DoctorService;
 import org.jinq.orm.stream.JinqStream;
 import org.jinq.tuples.Pair;
@@ -11,15 +11,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MasterCourseCustomRepositoryImpl extends BaseJinqRepositoryImpl<MasterCourseModel> implements MasterCourseCustomRepository {
+public class MasterAppointmentCustomRepositoryImpl extends BaseJinqRepositoryImpl<MasterAppointmentModel> implements MasterAppointmentCustomRepository {
     Logger LOG = LoggerFactory.getLogger(DoctorService.class);
     @Override
-    protected Class<MasterCourseModel> entityType() {
-        return MasterCourseModel.class;
+    protected Class<MasterAppointmentModel> entityType() {
+        return MasterAppointmentModel.class;
     }
 
     @Override
-    public List<DetailCourseModel> findByDateAndStatusCourse(Date date, int status) throws Exception {
+    public List<DetailAppointmentModel> findByDateAndStatusDetail(Date date, int status) throws Exception {
         LOG.info("date: {}, status: {}", date, status);
         return stream()
                 .where(m -> m.getDate().equals(date))

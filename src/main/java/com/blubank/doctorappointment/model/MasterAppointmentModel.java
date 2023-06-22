@@ -3,7 +3,6 @@ package com.blubank.doctorappointment.model;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 //@NamedEntityGraph(name = "MasterCourseModel.detail",
 //        attributeNodes = @NamedAttributeNode("detail")
 //)
-public class MasterCourseModel implements Serializable {
+public class MasterAppointmentModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "master_id")
@@ -26,5 +25,5 @@ public class MasterCourseModel implements Serializable {
     private Integer countDischarge;
     private Integer countDelete;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "master")
-    private List<DetailCourseModel> detail;
+    private List<DetailAppointmentModel> detail;
 }

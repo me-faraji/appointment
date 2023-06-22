@@ -1,11 +1,9 @@
 package com.blubank.doctorappointment.controller;
 
-import com.blubank.doctorappointment.controller.dto.DTODetailCourse;
-import com.blubank.doctorappointment.controller.dto.DTOMasterCourse;
+import com.blubank.doctorappointment.controller.dto.DTODetailAppointment;
+import com.blubank.doctorappointment.controller.dto.DTOMasterAppointment;
 import com.blubank.doctorappointment.controller.excp.ExcpControllerInvalidParameterException;
-import com.blubank.doctorappointment.controller.excp.ExcpControllerNullParameterException;
-import com.blubank.doctorappointment.model.MasterCourseModel;
-import com.blubank.doctorappointment.model.enums.EDetailCourseStatus;
+import com.blubank.doctorappointment.model.enums.EDetailAppointmentStatus;
 import com.blubank.doctorappointment.service.DoctorService;
 import com.blubank.doctorappointment.util.DateUtil;
 import org.slf4j.Logger;
@@ -27,9 +25,9 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @PostMapping(value = "/course/create/{fromDate}/{toDate}")
-    public String createCourse(@PathVariable(name = "fromDate") String strFromDate,
-                                       @PathVariable(name = "toDate") String strToDate) throws Exception {
+    @PostMapping(value = "/appointment/create/{fromDate}/{toDate}")
+    public String createAppointment(@PathVariable(name = "fromDate") String strFromDate,
+                                    @PathVariable(name = "toDate") String strToDate) throws Exception {
         LOG.info("fromDate: {}, toDate: {}", strFromDate, strToDate);
         long diffInTime;
         Date fromDate;
@@ -49,37 +47,37 @@ public class DoctorController {
         long diffInMinutes = DateUtil.diffInMinutes(diffInTime);
         if (diffInMinutes < 30)
             throw new ExcpControllerInvalidParameterException("هر دوره حداقل 30 دقیقه می باشد.");
-        return doctorService.doSaveCourse(fromDate, strFromDate, diffInMinutes);
+        return doctorService.doSaveAppointment(fromDate, strFromDate, diffInMinutes);
     }
-    @GetMapping(value = "/course/fetch/{date}")
-    public DTOMasterCourse getCourse(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/appointment/fetch/{date}")
+    public DTOMasterAppointment getAppointment(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY));
+        return doctorService.fetchDetail(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY));
     }
-    @GetMapping(value = "/course/empty/fetch/{date}")
-    public List<DTODetailCourse> getEmptyCourse(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/appointment/empty/fetch/{date}")
+    public List<DTODetailAppointment> getEmptyAppointment(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.EMPTY);
+        return doctorService.fetchDetail(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailAppointmentStatus.EMPTY);
     }
-    @GetMapping(value = "/course/reserve/fetch/{date}")
-    public List<DTODetailCourse> getReserveCourse(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/appointment/reserve/fetch/{date}")
+    public List<DTODetailAppointment> getReserveAppointment(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.RESERVE);
+        return doctorService.fetchDetail(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailAppointmentStatus.RESERVE);
     }
-    @GetMapping(value = "/course/discharge/fetch/{date}")
-    public List<DTODetailCourse> getDischargeCourse(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/appointment/discharge/fetch/{date}")
+    public List<DTODetailAppointment> getDischargeAppointment(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.DISCHARGE);
+        return doctorService.fetchDetail(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailAppointmentStatus.DISCHARGE);
     }
-    @GetMapping(value = "/course/delete/fetch/{date}")
-    public List<DTODetailCourse> getDeleteCourse(@PathVariable(name = "date") String strDate) throws Exception {
+    @GetMapping(value = "/appointment/delete/fetch/{date}")
+    public List<DTODetailAppointment> getDeleteAppointment(@PathVariable(name = "date") String strDate) throws Exception {
         LOG.info("strDate: {}", strDate);
-        return doctorService.fetchCourse(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailCourseStatus.DELETE);
+        return doctorService.fetchDetail(DateUtil.parse(strDate, DateUtil.EPattern.DD_MM_YYYY), EDetailAppointmentStatus.DELETE);
     }
-    @DeleteMapping(value = "/course/delete/{id}")
-    public String deleteCourseById(@PathVariable(name = "id") Long id) {
-        LOG.info("course id for delete: {}", id);
-        return doctorService.doDeleteCourseById(id);
+    @DeleteMapping(value = "/appointment/delete/{id}")
+    public String deleteAppointmentById(@PathVariable(name = "id") Long id) {
+        LOG.info("appointment id for delete: {}", id);
+        return doctorService.doDeleteAppointmentById(id);
     }
 
 }

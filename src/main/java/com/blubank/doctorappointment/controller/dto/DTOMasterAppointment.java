@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Getter@Setter@AllArgsConstructor@NoArgsConstructor@Builder
-public class DTOMasterCourse implements Serializable {
+public class DTOMasterAppointment implements Serializable {
     private Long id;
     private Date date;
     private Integer capacity;
@@ -14,5 +14,5 @@ public class DTOMasterCourse implements Serializable {
     private Integer countReserve;
     private Integer countDischarge;
     private Integer countDelete;
-    private List<DTODetailCourse> detail;
+    private List<DTODetailAppointment> detail;
 }

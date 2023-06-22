@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter@Setter@AllArgsConstructor@NoArgsConstructor
@@ -19,5 +18,5 @@ public class PatientModel implements Serializable {
     private String lastName;
     private String mobil;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<DetailCourseModel> course;
+    private List<DetailAppointmentModel> course;
 }

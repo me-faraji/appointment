@@ -3,7 +3,7 @@ package com.blubank.doctorappointment.model.enums;
 import lombok.Getter;
 
 @Getter
-public enum EDetailCourseStatus {
+public enum EDetailAppointmentStatus {
     EMPTY(101, "empty", "خالی"),
     RESERVE(201, "reserve", "رزرو"),
     DISCHARGE(301, "discharge", "ترخیص"),
@@ -12,16 +12,16 @@ public enum EDetailCourseStatus {
     private final int code;
     private final String eName;
     private final String pName;
-    EDetailCourseStatus(int code, String eName, String pName) {
+    EDetailAppointmentStatus(int code, String eName, String pName) {
         this.code = code;
         this.eName = eName;
         this.pName = pName;
     }
-    public static EDetailCourseStatus getValue(int code) {
-        EDetailCourseStatus[] arr$ = values();
+    public static EDetailAppointmentStatus getValue(int code) {
+        EDetailAppointmentStatus[] arr$ = values();
         int len$ = arr$.length;
         for(int i$ = 0; i$ < len$; ++i$) {
-            EDetailCourseStatus item = arr$[i$];
+            EDetailAppointmentStatus item = arr$[i$];
             if (item.getCode() == code) {
                 return item;
             }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_detail_course")
 @Getter@Setter@AllArgsConstructor@NoArgsConstructor
-public class DetailCourseModel implements Serializable {
+public class DetailAppointmentModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,7 +16,7 @@ public class DetailCourseModel implements Serializable {
     private Integer status;
     @JoinColumn(name = "master_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private MasterCourseModel master;
+    private MasterAppointmentModel master;
 
     @JoinColumn(name = "patient_id")
     @ManyToOne(fetch = FetchType.LAZY)

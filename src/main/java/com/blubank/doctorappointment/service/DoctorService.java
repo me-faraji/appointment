@@ -2,16 +2,16 @@ package com.blubank.doctorappointment.service;
 
 import com.blubank.doctorappointment.common._Helper;
 import com.blubank.doctorappointment.common.EntityMapper;
-import com.blubank.doctorappointment.controller.dto.DTODetailCourse;
-import com.blubank.doctorappointment.controller.dto.DTOMasterCourse;
-import com.blubank.doctorappointment.model.DetailCourseModel;
-import com.blubank.doctorappointment.model.MasterCourseModel;
-import com.blubank.doctorappointment.model.enums.EDetailCourseStatus;
-import com.blubank.doctorappointment.repository.DetailCourseRepository;
-import com.blubank.doctorappointment.repository.MasterCourseRepository;
+import com.blubank.doctorappointment.controller.dto.DTODetailAppointment;
+import com.blubank.doctorappointment.controller.dto.DTOMasterAppointment;
+import com.blubank.doctorappointment.model.DetailAppointmentModel;
+import com.blubank.doctorappointment.model.MasterAppointmentModel;
+import com.blubank.doctorappointment.model.enums.EDetailAppointmentStatus;
+import com.blubank.doctorappointment.repository.DetailAppointmentRepository;
+import com.blubank.doctorappointment.repository.MasterAppointmentRepository;
 import com.blubank.doctorappointment.service.excp.ExcpServiceDuplicateException;
-import com.blubank.doctorappointment.service.excp.ExcpServiceNotFoundCourseException;
-import com.blubank.doctorappointment.service.excp.ExcpServiceReserveCourseException;
+import com.blubank.doctorappointment.service.excp.ExcpServiceNotFoundAppointmentException;
+import com.blubank.doctorappointment.service.excp.ExcpServiceReserveAppointmentException;
 import com.blubank.doctorappointment.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,60 +25,60 @@ import java.util.Optional;
 @Service
 public class DoctorService {
     Logger LOG = LoggerFactory.getLogger(DoctorService.class);
-    MasterCourseRepository masterCourseRepository;
-    DetailCourseRepository detailCourseRepository;
+    MasterAppointmentRepository masterAppointmentRepository;
+    DetailAppointmentRepository detailAppointmentRepository;
 
     @Autowired
-    public DoctorService(MasterCourseRepository masterCourseRepository,
-                         DetailCourseRepository detailCourseRepository) {
-        this.masterCourseRepository = masterCourseRepository;
-        this.detailCourseRepository = detailCourseRepository;
+    public DoctorService(MasterAppointmentRepository masterAppointmentRepository,
+                         DetailAppointmentRepository detailAppointmentRepository) {
+        this.masterAppointmentRepository = masterAppointmentRepository;
+        this.detailAppointmentRepository = detailAppointmentRepository;
     }
 
     @Transactional
-    public String doSaveCourse(Date dateTime, String strFromDate, long diffInMinutes) throws Exception {
+    public String doSaveAppointment(Date dateTime, String strFromDate, long diffInMinutes) throws Exception {
         Date date = DateUtil.parse(strFromDate, DateUtil.EPattern.DD_MM_YYYY);
-        if (masterCourseRepository.findByDate(date).isPresent())
+        if (masterAppointmentRepository.findByDate(date).isPresent())
             throw new ExcpServiceDuplicateException("تاریخ مورد نظر قبلا زمانبندی شده است.");
         LOG.info("from: {}, diffInMinutes: {}", date, diffInMinutes);
-        MasterCourseModel master = new MasterCourseModel();
+        MasterAppointmentModel master = new MasterAppointmentModel();
         master.setDate(date);
         master.setCountDelete(0);
         master.setCountReserve(0);
         master.setCountDischarge(0);
-        masterCourseRepository.save(master);
+        masterAppointmentRepository.save(master);
         LOG.info("persist master: {}", master.getId());
-        List<DetailCourseModel> details = _Helper.generateDetail(dateTime, 30, diffInMinutes, master);
+        List<DetailAppointmentModel> details = _Helper.generateDetail(dateTime, 30, diffInMinutes, master);
         master.setCapacity(details.size());
         master.setCountEmpty(details.size());
-        detailCourseRepository.saveAll(details);
+        detailAppointmentRepository.saveAll(details);
         LOG.info("persist detail: {}", details.size());
         return "تعریف دوره با موفقیت انجام شد.";
     }
-    public DTOMasterCourse fetchCourse(Date date) throws Exception {
-        Optional<MasterCourseModel> master = masterCourseRepository.findByDate(date);
+    public DTOMasterAppointment fetchDetail(Date date) throws Exception {
+        Optional<MasterAppointmentModel> master = masterAppointmentRepository.findByDate(date);
         if (master.isEmpty()) return null;
         return EntityMapper.INSTANCE.toDto(master.get());
     }
-    public List<DTODetailCourse> fetchCourse(Date date, EDetailCourseStatus eDetailCourseStatus) throws Exception {
-        List<DetailCourseModel> details = masterCourseRepository.findByDateAndStatusCourse(date, eDetailCourseStatus.getCode());
+    public List<DTODetailAppointment> fetchDetail(Date date, EDetailAppointmentStatus eDetailAppointmentStatus) throws Exception {
+        List<DetailAppointmentModel> details = masterAppointmentRepository.findByDateAndStatusDetail(date, eDetailAppointmentStatus.getCode());
         if (details.isEmpty()) return null;
         return EntityMapper.INSTANCE.toDto(details);
     }
     @Transactional
-    public String doDeleteCourseById(long id) {
-        Optional<DetailCourseModel> detailCourseModel = detailCourseRepository.findById(id);
-        if (detailCourseModel.isEmpty())
-            throw new ExcpServiceNotFoundCourseException("دوره مورد نظر یافت نشد، لطفا شناسه دوره را صحیح وارد نمائید.");
-        if (detailCourseModel.get().getStatus() != EDetailCourseStatus.EMPTY.getCode())
-            throw new ExcpServiceReserveCourseException("وضعیت دوره مورد نظر " + EDetailCourseStatus.getValue(detailCourseModel.get().getStatus()).getPName() + " شده می باشد.");
-        LOG.info("course id for deleted: {}", id);
-        detailCourseModel.get().setStatus(EDetailCourseStatus.DELETE.getCode());
-        detailCourseRepository.save(detailCourseModel.get());
-        Optional<MasterCourseModel> masterCourseModel = masterCourseRepository.findById(detailCourseModel.get().getMaster().getId());
-        masterCourseModel.get().setCountDelete(masterCourseModel.get().getCountDelete() + 1);
-        masterCourseModel.get().setCountEmpty(masterCourseModel.get().getCountEmpty() - 1);
-        LOG.info("change status course to delete successfully: {}", id);
+    public String doDeleteAppointmentById(long id) {
+        Optional<DetailAppointmentModel> detailAppointmentModel = detailAppointmentRepository.findById(id);
+        if (detailAppointmentModel.isEmpty())
+            throw new ExcpServiceNotFoundAppointmentException("دوره مورد نظر یافت نشد، لطفا شناسه دوره را صحیح وارد نمائید.");
+        if (detailAppointmentModel.get().getStatus() != EDetailAppointmentStatus.EMPTY.getCode())
+            throw new ExcpServiceReserveAppointmentException("وضعیت دوره مورد نظر " + EDetailAppointmentStatus.getValue(detailAppointmentModel.get().getStatus()).getPName() + " شده می باشد.");
+        LOG.info("Appointment id for deleted: {}", id);
+        detailAppointmentModel.get().setStatus(EDetailAppointmentStatus.DELETE.getCode());
+        detailAppointmentRepository.save(detailAppointmentModel.get());
+        Optional<MasterAppointmentModel> masterAppointmentModel = masterAppointmentRepository.findById(detailAppointmentModel.get().getMaster().getId());
+        masterAppointmentModel.get().setCountDelete(masterAppointmentModel.get().getCountDelete() + 1);
+        masterAppointmentModel.get().setCountEmpty(masterAppointmentModel.get().getCountEmpty() - 1);
+        LOG.info("change status Appointment to delete successfully: {}", id);
         return "دوره مورد نظر با موفقیت حذف شد.";
     }
 }

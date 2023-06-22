@@ -7,5 +7,5 @@ public class DTOReserve {
     private String firstName;
     private String lastName;
     private String mobil;
-    private Long courseId;
+    private Long AppointmentId;
 }
