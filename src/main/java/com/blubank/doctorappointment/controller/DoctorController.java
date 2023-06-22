@@ -27,8 +27,8 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @PostMapping(value = "/course/start/{fromDate}/{toDate}")
-    public MasterCourseModel addCourse(@PathVariable(name = "fromDate") String strFromDate,
+    @PostMapping(value = "/course/create/{fromDate}/{toDate}")
+    public String createCourse(@PathVariable(name = "fromDate") String strFromDate,
                                        @PathVariable(name = "toDate") String strToDate) throws Exception {
         LOG.info("fromDate: {}, toDate: {}", strFromDate, strToDate);
         long diffInTime;

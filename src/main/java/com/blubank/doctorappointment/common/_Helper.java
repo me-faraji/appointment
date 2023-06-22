@@ -5,6 +5,7 @@ import com.blubank.doctorappointment.model.MasterCourseModel;
 import com.blubank.doctorappointment.model.enums.EDetailCourseStatus;
 import com.blubank.doctorappointment.util.DateUtil;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

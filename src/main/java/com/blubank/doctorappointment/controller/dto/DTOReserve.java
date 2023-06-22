@@ -6,7 +6,6 @@ import lombok.*;
 public class DTOReserve {
     private String firstName;
     private String lastName;
-    private String nationalNumber;
-    private String mobile;
-    private Long detailCourseId;
+    private String mobil;
+    private Long courseId;
 }

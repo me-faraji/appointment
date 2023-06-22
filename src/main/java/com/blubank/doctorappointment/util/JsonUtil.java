@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.util;
 
+import com.blubank.doctorappointment.controller.dto.DTOReserve;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -25,5 +26,14 @@ public class JsonUtil {
     }
     public static <T> Set<T> readValueToSet(String val, Class<T> clazz) throws Exception {
         return OBJECT_MAPPER.readValue(val, OBJECT_MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz));
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(writeValueAsString(DTOReserve.builder()
+                .firstName("mehdi")
+                .lastName("faraji")
+                .mobil("09379644267")
+                .build()
+        ));
     }
 }

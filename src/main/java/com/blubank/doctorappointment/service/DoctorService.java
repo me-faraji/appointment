@@ -36,23 +36,24 @@ public class DoctorService {
     }
 
     @Transactional
-    public MasterCourseModel doSaveCourse(Date from, String strFromDate, long diffInMinutes) throws Exception {
-        if (masterCourseRepository.findByDate(from).isPresent())
+    public String doSaveCourse(Date dateTime, String strFromDate, long diffInMinutes) throws Exception {
+        Date date = DateUtil.parse(strFromDate, DateUtil.EPattern.DD_MM_YYYY);
+        if (masterCourseRepository.findByDate(date).isPresent())
             throw new ExcpServiceDuplicateException("تاریخ مورد نظر قبلا زمانبندی شده است.");
-        LOG.info("from: {}, diffInMinutes: {}", from, diffInMinutes);
+        LOG.info("from: {}, diffInMinutes: {}", date, diffInMinutes);
         MasterCourseModel master = new MasterCourseModel();
-        master.setDate(DateUtil.parse(strFromDate, DateUtil.EPattern.DD_MM_YYYY));
+        master.setDate(date);
         master.setCountDelete(0);
         master.setCountReserve(0);
         master.setCountDischarge(0);
         masterCourseRepository.save(master);
         LOG.info("persist master: {}", master.getId());
-        List<DetailCourseModel> details = _Helper.generateDetail(from, 30, diffInMinutes, master);
+        List<DetailCourseModel> details = _Helper.generateDetail(dateTime, 30, diffInMinutes, master);
         master.setCapacity(details.size());
         master.setCountEmpty(details.size());
         detailCourseRepository.saveAll(details);
         LOG.info("persist detail: {}", details.size());
-        return master;
+        return "تعریف دوره با موفقیت انجام شد.";
     }
     public DTOMasterCourse fetchCourse(Date date) throws Exception {
         Optional<MasterCourseModel> master = masterCourseRepository.findByDate(date);
@@ -66,14 +67,17 @@ public class DoctorService {
     }
     @Transactional
     public String doDeleteCourseById(long id) {
-        Optional<DetailCourseModel> model = detailCourseRepository.findById(id);
-        if (model.isEmpty())
+        Optional<DetailCourseModel> detailCourseModel = detailCourseRepository.findById(id);
+        if (detailCourseModel.isEmpty())
             throw new ExcpServiceNotFoundCourseException("دوره مورد نظر یافت نشد، لطفا شناسه دوره را صحیح وارد نمائید.");
-        if (model.get().getStatus() != EDetailCourseStatus.EMPTY.getCode())
-            throw new ExcpServiceReserveCourseException("وضعیت دوره مورد نظر " + EDetailCourseStatus.getValue(model.get().getStatus()).getPName() + " شده می باشد.");
+        if (detailCourseModel.get().getStatus() != EDetailCourseStatus.EMPTY.getCode())
+            throw new ExcpServiceReserveCourseException("وضعیت دوره مورد نظر " + EDetailCourseStatus.getValue(detailCourseModel.get().getStatus()).getPName() + " شده می باشد.");
         LOG.info("course id for deleted: {}", id);
-        model.get().setStatus(EDetailCourseStatus.DELETE.getCode());
-        detailCourseRepository.save(model.get());
+        detailCourseModel.get().setStatus(EDetailCourseStatus.DELETE.getCode());
+        detailCourseRepository.save(detailCourseModel.get());
+        Optional<MasterCourseModel> masterCourseModel = masterCourseRepository.findById(detailCourseModel.get().getMaster().getId());
+        masterCourseModel.get().setCountDelete(masterCourseModel.get().getCountDelete() + 1);
+        masterCourseModel.get().setCountEmpty(masterCourseModel.get().getCountEmpty() - 1);
         LOG.info("change status course to delete successfully: {}", id);
         return "دوره مورد نظر با موفقیت حذف شد.";
     }
