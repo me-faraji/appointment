@@ -27,7 +27,6 @@ public class DoctorControllerTest {
     @Autowired
     PatientController patientController;
 
-    // -------------------------------------------------------------- create Appointment ------------------------------------
     /**
      * As a doctor I would like to add a start and end time for each day, so that this time is broken down into 30 minutes periods.
      * If one of the periods is becomes less than 30 minutes during breakdown, then it should be ignored.

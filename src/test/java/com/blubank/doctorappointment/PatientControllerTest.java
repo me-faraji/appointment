@@ -13,12 +13,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
@@ -147,7 +145,7 @@ public class PatientControllerTest {
 
     /**
      * Story: Patients can view their own appointments
-     *              As a patient I like to be able to view my own appointments, providing only my phone number.
+     *        As a patient I like to be able to view my own appointments, providing only my phone number.
 
      1. If there is no appointment with this phone number, then an empty list should be shown.
      2. If there are more than one appointment taken by this user, then all should be shown.

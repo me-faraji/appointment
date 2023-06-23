@@ -105,7 +105,6 @@
 			<artifactId>jinq-hibernate-legacy</artifactId>
 			<version>1.8.35</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.ibm.icu/icu4j -->
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
