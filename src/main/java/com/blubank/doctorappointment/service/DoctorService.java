@@ -53,7 +53,7 @@ public class DoctorService {
         master.setCountEmpty(details.size());
         detailAppointmentRepository.saveAll(details);
         LOG.info("persist detail: {}", details.size());
-        return "تعریف دوره با موفقیت انجام شد.";
+        return "وقت ملاقات تاریخ مورد نظر با موفقیت تنظیم شد.";
     }
     public DTOMasterAppointment fetchDetail(Date date) throws Exception {
         Optional<MasterAppointmentModel> master = masterAppointmentRepository.findByDate(date);
@@ -79,6 +79,6 @@ public class DoctorService {
         masterAppointmentModel.get().setCountDelete(masterAppointmentModel.get().getCountDelete() + 1);
         masterAppointmentModel.get().setCountEmpty(masterAppointmentModel.get().getCountEmpty() - 1);
         LOG.info("change status Appointment to delete successfully: {}", id);
-        return "دوره مورد نظر با موفقیت حذف شد.";
+        return "وقت ملاقات مورد نظر با موفقیت حذف شد.";
     }
 }

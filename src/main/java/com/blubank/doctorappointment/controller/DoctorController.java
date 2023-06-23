@@ -46,7 +46,7 @@ public class DoctorController {
             throw new ExcpControllerInvalidParameterException("حداکثر یک روز قابل زمانبندی می باشد.");
         long diffInMinutes = DateUtil.diffInMinutes(diffInTime);
         if (diffInMinutes < 30)
-            throw new ExcpControllerInvalidParameterException("هر دوره حداقل 30 دقیقه می باشد.");
+            throw new ExcpControllerInvalidParameterException("حداقل زمان هر ملاقات 30 دقیقه می باشد.");
         return doctorService.doSaveAppointment(fromDate, strFromDate, diffInMinutes);
     }
     @GetMapping(value = "/appointment/fetch/{date}")

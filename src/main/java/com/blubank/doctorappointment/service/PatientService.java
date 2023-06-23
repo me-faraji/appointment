@@ -48,9 +48,9 @@ public class PatientService {
                 Thread.currentThread().getId(), dtoReserve.getFirstName(), dtoReserve.getLastName(), dtoReserve.getMobil(), dtoReserve.getAppointmentId());
         Optional<DetailAppointmentModel> detailAppointmentModel = detailAppointmentRepository.findById(dtoReserve.getAppointmentId());
         if (detailAppointmentModel.isEmpty())
-            throw new ExcpServiceNotFoundAppointmentException("دوره مورد نظر یافت نشد، لطفا شناسه دوره را صحیح وارد نمائید.");
+            throw new ExcpServiceNotFoundAppointmentException("وقت ملاقات مورد نظر یافت نشد، لطفا شناسه دوره را صحیح وارد نمائید.");
         if (detailAppointmentModel.get().getStatus() != EDetailAppointmentStatus.EMPTY.getCode())
-            throw new ExcpServiceReserveAppointmentException("وضعیت دوره مورد نظر " + EDetailAppointmentStatus.getValue(detailAppointmentModel.get().getStatus()).getPName() + " شده می باشد.");
+            throw new ExcpServiceReserveAppointmentException("وضعیت وقت ملاقات مورد نظر " + EDetailAppointmentStatus.getValue(detailAppointmentModel.get().getStatus()).getPName() + " شده می باشد.");
         LOG.info("Appointment id for reserve: {}", dtoReserve.getAppointmentId());
         Optional<PatientModel> patientModel = patientRepository.findByMobil(dtoReserve.getMobil());
         if (patientModel.isEmpty()) {
@@ -63,7 +63,7 @@ public class PatientService {
         masterAppointmentModel.get().setCountReserve(masterAppointmentModel.get().getCountReserve() + 1);
         masterAppointmentModel.get().setCountEmpty(masterAppointmentModel.get().getCountEmpty() - 1);
         LOG.info("change status Appointment to reserve for {} successfully: {}", dtoReserve.getMobil(), dtoReserve.getAppointmentId());
-        return "رزرو نوبت با موفقیت انجام شد.";
+        return "وقت ملاقات مورد نظر با موفقیت رزرو شد.";
     }
 
 }
