@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "tb_detail_course")
+@Table(name = "tb_detail_appointment")
 @Getter@Setter@AllArgsConstructor@NoArgsConstructor
 public class DetailAppointmentModel implements Serializable {
     @Id

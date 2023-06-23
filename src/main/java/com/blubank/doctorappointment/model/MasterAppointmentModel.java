@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter@Setter@AllArgsConstructor@NoArgsConstructor
 @Entity
-@Table(name = "tb_master_course")
+@Table(name = "tb_master_appointment")
 //@NamedEntityGraph(name = "MasterCourseModel.detail",
 //        attributeNodes = @NamedAttributeNode("detail")
 //)

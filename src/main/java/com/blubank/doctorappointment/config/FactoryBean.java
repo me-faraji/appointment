@@ -2,6 +2,7 @@ package com.blubank.doctorappointment.config;
 
 import com.hazelcast.config.*;
 import com.hazelcast.spi.merge.PutIfAbsentMergePolicy;
+import org.hibernate.SessionFactory;
 import org.jinq.jpa.JinqJPAStreamProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

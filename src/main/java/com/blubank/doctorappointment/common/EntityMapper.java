@@ -17,8 +17,11 @@ public interface EntityMapper {
     EntityMapper INSTANCE = Mappers.getMapper(EntityMapper.class);
 
     DTOMasterAppointment toDto(MasterAppointmentModel model);
+
     List<DTODetailAppointment> toDto(List<DetailAppointmentModel> model);
+
     DTOPatient toDtoPatient(PatientModel model);
+
     PatientModel toModel(DTOReserve dtoReserve);
 
 }
